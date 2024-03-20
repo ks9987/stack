@@ -1,9 +1,9 @@
 # Development
 
 ```
-docker compose build
-docker compose run --rm app bun postinstall
 docker compose up
+docker compose exec app bun postinstall
+docker compose exec app bun db:push
 ```
 
 # Tech Stack
