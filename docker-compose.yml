@@ -17,6 +17,8 @@ services:
     command: bun dev
     working_dir: /app
     tty: true
+    environment:
+      - WATCHPACK_POLLING=true
     ports:
       - 3000:3000
     networks:
