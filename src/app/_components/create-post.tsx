@@ -5,7 +5,11 @@ import { useState } from "react";
 
 import { api } from "~/trpc/react";
 
-export function CreatePost() {
+type Props = {
+  currentChannel: string;
+};
+
+export function CreatePost({ currentChannel }: Props) {
   const router = useRouter();
   const [name, setName] = useState("");
 
@@ -26,17 +30,17 @@ export function CreatePost() {
     >
       <input
         type="text"
-        placeholder="Title"
         value={name}
+        placeholder="Type your message..."
         onChange={(e) => setName(e.target.value)}
-        className="w-full rounded-full px-4 py-2 text-black"
+        className="w-full border border-gray-300 rounded px-2 py-1 mb-2"
       />
       <button
         type="submit"
-        className="rounded-full bg-white/10 px-10 py-3 font-semibold transition hover:bg-white/20"
+        className="bg-blue-500 text-white px-4 py-2 rounded"
         disabled={createPost.isPending}
       >
-        {createPost.isPending ? "Submitting..." : "Submit"}
+        {createPost.isPending ? "Sending..." : "Send"}
       </button>
     </form>
   );
