@@ -24,10 +24,12 @@ export default async function Home() {
   return (
     <div className="flex h-screen">
       <Sidebar channels={channels} currentChannel={currentChannel} />
-      <div className="flex-1 p-4 shadow-lg">
-        <h1 className="text-2xl font-bold mb-4"># {currentChannel}</h1>
-        <Posts posts={posts} />
-        <CreatePost currentChannel={currentChannel} />
+      <div className="flex justify-center flex-1 shadow-lg bg-slate-100">
+        <div className="w-[800px] p-4">
+          <h1 className="text-2xl font-bold mb-4"># {currentChannel}</h1>
+          <Posts posts={posts} />
+          <CreatePost currentChannel={currentChannel} />
+        </div>
       </div>
     </div>
   );

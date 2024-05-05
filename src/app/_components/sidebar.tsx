@@ -7,7 +7,7 @@ type Props = {
 
 export function Sidebar({ channels, currentChannel }: Props) {
   return (
-    <div className="w-56 bg-slate-50 px-2 pt-4 select-none">
+    <div className="w-56 min-w-56 bg-slate-200 px-2 pt-4 select-none">
       <h2 className="text-2xl font-bold mb-4">Channels</h2>
       <ul>
         {channels.map((channel) => (
@@ -16,7 +16,7 @@ export function Sidebar({ channels, currentChannel }: Props) {
             className={`rounded ${
               currentChannel === channel
                 ? "bg-slate-500 text-white"
-                : "hover:bg-gray-200"
+                : "hover:bg-slate-300 duration-100"
             }`}
           >
             <Link href={`/channels/${channel}`}>
