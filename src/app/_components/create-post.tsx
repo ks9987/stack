@@ -5,16 +5,28 @@ import { useState } from "react";
 
 import { api } from "~/trpc/react";
 
-export function CreatePost() {
+type Props = {
+  currentChannel: string;
+};
+
+export function CreatePost({ currentChannel }: Props) {
   const router = useRouter();
   const [name, setName] = useState("");
+  const [rows, setRows] = useState(5);
 
   const createPost = api.post.create.useMutation({
     onSuccess: () => {
       router.refresh();
       setName("");
+      setRows(5);
     },
   });
+
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setName(e.target.value);
+    const lines = e.target.value.split("\n");
+    setRows(Math.min(Math.max(lines.length, 5), 10));
+  };
 
   return (
     <form
@@ -22,21 +34,22 @@ export function CreatePost() {
         e.preventDefault();
         createPost.mutate({ name });
       }}
-      className="flex flex-col gap-2"
+      className="flex flex-col gap-2 bg-white p-4 rounded-lg"
+      style={{ height: "auto" }}
     >
-      <input
-        type="text"
-        placeholder="Title"
+      <textarea
         value={name}
-        onChange={(e) => setName(e.target.value)}
-        className="w-full rounded-full px-4 py-2 text-black"
+        placeholder="Type your message..."
+        onChange={handleChange}
+        className="w-full rounded px-2 py-1 mb-2 resize-none outline-none border-none"
+        rows={rows}
       />
       <button
         type="submit"
-        className="rounded-full bg-white/10 px-10 py-3 font-semibold transition hover:bg-white/20"
+        className="bg-sky-500 hover:bg-sky-600 duration-100 text-white px-4 py-2 rounded"
         disabled={createPost.isPending}
       >
-        {createPost.isPending ? "Submitting..." : "Submit"}
+        {createPost.isPending ? "Sending..." : "Send"}
       </button>
     </form>
   );
