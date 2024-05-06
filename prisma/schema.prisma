@@ -16,15 +16,26 @@ datasource db {
 }
 
 model Post {
-    id        Int      @id @default(autoincrement())
-    name      String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    createdBy   User   @relation(fields: [createdById], references: [id])
+    id          Int      @id @default(autoincrement())
+    text        String
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    channel     Channel  @relation(fields: [channelId], references: [id])
+    channelId   String
+    createdBy   User     @relation(fields: [createdById], references: [id])
     createdById String
 
-    @@index([name])
+    @@index([channelId])
+}
+
+model Channel {
+    id          String   @id @default(cuid())
+    name        String
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    posts       Post[]
+    createdBy   User     @relation(fields: [createdById], references: [id])
+    createdById String
 }
 
 // Necessary for Next auth
@@ -63,6 +74,7 @@ model User {
     accounts      Account[]
     sessions      Session[]
     posts         Post[]
+    channels      Channel[]
 }
 
 model VerificationToken {
