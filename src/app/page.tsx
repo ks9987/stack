@@ -1,9 +1,10 @@
+import Link from "next/link";
 import { redirect } from "next/navigation";
-import { Sidebar } from "~/app/_components/sidebar";
-import { Posts } from "~/app/_components/posts";
-import { CreatePost } from "~/app/_components/create-post";
+
 import { getServerAuthSession } from "~/server/auth";
-import { api } from "~/trpc/server";
+import { db } from "~/server/db";
+
+import { Sidebar } from "~/app/_components/sidebar";
 
 export default async function Home() {
   const session = await getServerAuthSession();
@@ -12,23 +13,27 @@ export default async function Home() {
     redirect("/login");
   }
 
-  const channels = ["general", "random", "announcements"];
-  const currentChannel = "general";
-  const posts = [
-    { id: 1, text: "Hello, world!", channel: "general" },
-    { id: 2, text: "マスカットの中でも最高級といわれるマスカットオブアレキサンドリアを ひとつひとつ丁寧にまるごと求肥で包んだ和菓子です!", channel: "general" },
-  ];
-  // const latestPost = await api.post.getLatest();
-  // const hello = await api.post.hello({ text: "from tRPC" });
+  const firstChannel = await db.channel.findFirst({
+    where: { createdById: session.user.id },
+  });
+  
+  if (firstChannel) {
+    redirect(`/${firstChannel.id}`)
+  }
 
   return (
     <div className="flex h-screen">
-      <Sidebar channels={channels} currentChannel={currentChannel} />
+      <Sidebar channelId="" />
       <div className="flex justify-center flex-1 shadow-lg bg-slate-100">
         <div className="w-[800px] p-4">
-          <h1 className="text-2xl font-bold mb-4"># {currentChannel}</h1>
-          <Posts posts={posts} />
-          <CreatePost currentChannel={currentChannel} />
+          <div className="flex flex-1 flex-col justify-center items-center h-full">
+            <h1 className="text-2xl font-bold mb-2 text-gray-500">Channel not found</h1>
+            <p className="mt-2">
+              <Link href="#" className="bg-sky-500 hover:bg-sky-600 duration-100 text-white px-4 py-2 rounded">
+                Create a channel
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
     </div>

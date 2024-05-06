@@ -1,17 +1,14 @@
+import { db } from "~/server/db";
+
 import { EditButton } from "~/app/_components/edit-button";
 import { DeleteButton } from "~/app/_components/delete-button";
 
-type Post = {
-  id: number;
-  text: string;
-  channel: string;
-};
+export async function Posts({ channelId }: { channelId: string }) {
+  const posts = await db.post.findMany({
+    where: { channelId },
+    orderBy: { createdAt: "asc" },
+  });
 
-type Props = {
-  posts: Post[];
-};
-
-export function Posts({ posts }: Props) {
   return (
     <div className="mb-4">
       {posts.map((post) => (
