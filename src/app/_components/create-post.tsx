@@ -2,27 +2,50 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useEditor, EditorContent } from '@tiptap/react'
+import StarterKit from '@tiptap/starter-kit'
+import CharacterCount from "@tiptap/extension-character-count";
+import Placeholder from "@tiptap/extension-placeholder";
+import Link from "@tiptap/extension-link";
 
+import "~/styles/markdown.css";
 import { api } from "~/trpc/react";
 
 export function CreatePost({ channelId }: { channelId: string }) {
   const router = useRouter();
   const [text, setText] = useState("");
-  const [rows, setRows] = useState(5);
+
+  const extensions = [
+    StarterKit,
+    CharacterCount.configure({ limit: 18000 }),
+    Link.configure({
+      openOnClick: false,
+    }),
+    Placeholder.configure({
+      placeholder: 'Markdown your message...',
+    }),
+  ];
+
+  const editor = useEditor({
+    extensions: extensions,
+    content: text,
+    onUpdate: ({ editor }) => {
+      const text = editor.getHTML();
+      console.log(text)
+      setText(text);
+    },
+  })
 
   const createPost = api.post.create.useMutation({
     onSuccess: () => {
       router.refresh();
       setText("");
-      setRows(5);
+      editor?.commands.clearContent();
     },
+    onError: (error) => {
+      console.error(error);
+    }
   });
-
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setText(e.target.value);
-    const lines = e.target.value.split("\n");
-    setRows(Math.min(Math.max(lines.length, 5), 20));
-  };
 
   return (
     <form
@@ -33,13 +56,7 @@ export function CreatePost({ channelId }: { channelId: string }) {
       className="flex flex-col gap-2 bg-white p-4 rounded-lg"
       style={{ height: "auto" }}
     >
-      <textarea
-        value={text}
-        placeholder="Type your message..."
-        onChange={handleChange}
-        className="w-full rounded px-2 py-1 mb-2 resize-none outline-none border-none"
-        rows={rows}
-      />
+      <EditorContent editor={editor} />
       <button
         type="submit"
         className="bg-sky-500 hover:bg-sky-600 duration-100 text-white px-4 py-2 rounded"
