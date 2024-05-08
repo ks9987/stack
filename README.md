@@ -6,13 +6,18 @@ docker compose exec app bun postinstall
 docker compose exec app bun db:push
 ```
 
-http://localhost:3000 app
-http://localhost:5555 prisma studio
-https://www.prisma.io/docs
-https://tailwindcss.com/
+app
+http://localhost:3000
+prisma studio
+http://localhost:5555
 
 # Tech Stack
-- T3 Stack
+ORM
+https://www.prisma.io/docs
+CSS
+https://tailwindcss.com/
+Markdown editor
+https://tiptap.dev/docs
 
 # Deployment
 ...
