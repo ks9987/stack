@@ -30,7 +30,7 @@ export function CreatePost({ channelId }: { channelId: string }) {
     extensions: extensions,
     content: text,
     onUpdate: ({ editor }) => {
-      const text = editor.getHTML();
+      const text = JSON.stringify(editor.getJSON());
       setText(text);
     },
   })
