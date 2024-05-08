@@ -17,7 +17,7 @@ export async function Sidebar({ channelId }: { channelId: string }) {
   const channels = await getChannels();
 
   return (
-    <div className="w-56 min-w-56 bg-slate-50 px-2 pt-4 select-none">
+    <div className="w-56 min-w-56 bg-slate-50 px-2 pt-4 select-none overflow-y-scroll">
       <h2 className="text-2xl font-bold mb-4">Channels</h2>
       <ul>
         {channels?.map((channel) => (

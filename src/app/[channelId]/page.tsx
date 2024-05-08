@@ -21,8 +21,8 @@ export default async function Page({ params }: { params: { channelId: string } }
   return (
     <div className="flex h-screen">
       <Sidebar channelId={params.channelId} />
-      <div className="flex justify-center flex-1 shadow-lg bg-white">
-        <div className="w-[800px] p-4">
+      <div className="flex justify-center flex-1 shadow-lg bg-white overflow-y-scroll">
+        <div className="w-[800px] h-fit	p-4 ">
           {!currentChannel ? (
             <div className="flex flex-1 flex-col justify-center items-center h-full">
               <h1 className="text-2xl font-bold mb-2 text-gray-500">Channel not found</h1>

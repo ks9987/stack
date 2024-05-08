@@ -31,7 +31,6 @@ export function CreatePost({ channelId }: { channelId: string }) {
     content: text,
     onUpdate: ({ editor }) => {
       const text = editor.getHTML();
-      console.log(text)
       setText(text);
     },
   })
