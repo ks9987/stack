@@ -24,7 +24,7 @@ export default async function Home() {
   return (
     <div className="flex h-screen">
       <Sidebar channelId="" />
-      <div className="flex justify-center flex-1 shadow-lg bg-slate-100">
+      <div className="flex justify-center flex-1 shadow-lg bg-white">
         <div className="w-[800px] p-4">
           <div className="flex flex-1 flex-col justify-center items-center h-full">
             <h1 className="text-2xl font-bold mb-2 text-gray-500">Channel not found</h1>

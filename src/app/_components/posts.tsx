@@ -14,7 +14,7 @@ export async function Posts({ channelId }: { channelId: string }) {
       {posts.map((post) => (
         <div
           key={post.id}
-          className="mb-6 bg-white p-4 rounded-lg relative"
+          className="mb-6 bg-white hover:bg-slate-50 hover:shadow-sm border duration-50 p-4 rounded-lg relative"
         >
           <p>{post.text}</p>
           <div className="absolute top-0 right-0 border rounded bg-white p-2 flex opacity-0 hover:opacity-100 transition-opacity duration-100">

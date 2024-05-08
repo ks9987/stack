@@ -53,7 +53,7 @@ export function CreatePost({ channelId }: { channelId: string }) {
         e.preventDefault();
         createPost.mutate({ text, channelId });
       }}
-      className="flex flex-col gap-2 bg-white p-4 rounded-lg"
+      className="flex flex-col border focus-within:shadow-sm focus-within:border-slate-300 duration-50 gap-2 bg-white p-4 rounded-lg"
       style={{ height: "auto" }}
     >
       <EditorContent editor={editor} />

@@ -21,7 +21,7 @@ export default async function Page({ params }: { params: { channelId: string } }
   return (
     <div className="flex h-screen">
       <Sidebar channelId={params.channelId} />
-      <div className="flex justify-center flex-1 shadow-lg bg-slate-100">
+      <div className="flex justify-center flex-1 shadow-lg bg-white">
         <div className="w-[800px] p-4">
           {!currentChannel ? (
             <div className="flex flex-1 flex-col justify-center items-center h-full">
